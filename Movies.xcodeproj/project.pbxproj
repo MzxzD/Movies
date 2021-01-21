@@ -65,6 +65,15 @@
 			path = Endpoint;
 			sourceTree = "<group>";
 		};
+		B50DE88625BA0E910047185B /* Delagates */ = {
+			isa = PBXGroup;
+			children = (
+				B570F03025B608F60050E417 /* SceneDelegate.swift */,
+				B570F02E25B608F60050E417 /* AppDelegate.swift */,
+			);
+			path = Delagates;
+			sourceTree = "<group>";
+		};
 		B519076D25B769FC0003D971 /* Facade */ = {
 			isa = PBXGroup;
 			children = (
@@ -116,11 +125,10 @@
 		B570F02D25B608F60050E417 /* Movies */ = {
 			isa = PBXGroup;
 			children = (
+				B50DE88625BA0E910047185B /* Delagates */,
 				B519077825B770A30003D971 /* Model */,
 				B570F09A25B765280050E417 /* Base */,
 				B570F04625B611A90050E417 /* Extensions */,
-				B570F02E25B608F60050E417 /* AppDelegate.swift */,
-				B570F03025B608F60050E417 /* SceneDelegate.swift */,
 				B570F03225B608F60050E417 /* ViewController.swift */,
 				B570F03425B608F60050E417 /* Main.storyboard */,
 				B570F03A25B608F80050E417 /* Assets.xcassets */,

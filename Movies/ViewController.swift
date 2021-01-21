@@ -9,6 +9,7 @@ import UIKit
 
 class ViewController: UIViewController { //, URLSessionDownloadDelegate, URLSessionDelegate {
   var imageView: UIImageView!
+  var label: UILabel!
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -18,26 +19,28 @@ class ViewController: UIViewController { //, URLSessionDownloadDelegate, URLSess
     self.view.addSubview(imageViewd)
     imageView = imageViewd
     imageView.scalesLargeContentImage = true
-    
+
     FacadeAPI.shared.fetchEntityType(Movies.self, from: .movie(.popular)) { (wrappedData) in
-      let lol = wrappedData.data!.results!.map({
-        return $0.posterPath
+      let testInfos: [(path: String, label: String)] = wrappedData.data!.results!.compactMap({
+        if let poster = $0.posterPath, let title = $0.title {
+          return (path: poster, label: title )
+        } else {
+          return nil
+        }
       })
-      for loldd in lol {
-        if let lold = loldd {
-          FacadeAPI.shared.fetchImage(.image(.poster(path: lold))) { [unowned self] (wrappedImage) in
-            if let image = wrappedImage.data {
-              self.imageView.image = image
-              let color = image.averageColor
-              let inverse = color?.textColor()
-              print(color)
-              print(inverse)
-            } else {
-              FacadeAPI.shared.showAlertView(from: self, with: "Whoops", and: wrappedImage.error ?? "Something went Wrong")
-            }
-          }
+      let firstInfo = testInfos.first!
+      
+
+      FacadeAPI.shared.fetchImage(.image(.poster(path: firstInfo.path))) { [unowned self] (wrappedImage) in
+        if let image = wrappedImage.data {
+          self.imageView.image = image
+          let color = image.averageColor
+          let inverse = color?.textColor()
+        } else {
+          FacadeAPI.shared.showAlertView(from: self, with: "Whoops", and: wrappedImage.error ?? "Something went Wrong")
         }
       }
+
     }
   }
 }
