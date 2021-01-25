@@ -48,6 +48,7 @@ class FacadeAPI {
     }
     if let imageData = appDelegate.ImageCache[urlString] {
       completionValue.data = UIImage(data: imageData)
+      completion(completionValue)
     } else {
       urlSession.sendRequestOfType(.get, endpoint: endpoint) { (wrappedData) in
         completionValue.error = wrappedData.error
