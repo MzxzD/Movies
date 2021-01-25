@@ -22,6 +22,19 @@ class TopMoviesCoordinator: Coordinator {
   }
   
   func start() {
-    presenter.pushViewController(controller, animated: true)
+    FacadeAPI.shared.fetchEntityType(Movies.self, from: .movie(.topRated)) { (wrappedData) in
+      if let movies = wrappedData.data {
+        let cleanedMovies = movies.results?.compactMap({ (movie) -> Movie? in
+          return (movie.title != nil && movie.posterPath != nil) ? movie : nil
+        })
+        if let filteredMovies = cleanedMovies {
+          self.controller.movies = filteredMovies
+        }
+      }
+      self.presenter.pushViewController(self.controller, animated: true)
+
+    }
+    
+    
   }
 }

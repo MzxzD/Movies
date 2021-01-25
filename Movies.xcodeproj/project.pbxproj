@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B5094ED925BF64D3000483A7 /* MovieCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5094ED825BF64D3000483A7 /* MovieCollectionViewCell.swift */; };
 		B50DE88325BA07900047185B /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50DE88225BA07900047185B /* Endpoint.swift */; };
 		B519076A25B7698A0003D971 /* DataWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B519076825B7698A0003D971 /* DataWrapper.swift */; };
 		B519076B25B7698A0003D971 /* ErrorAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B519076925B7698A0003D971 /* ErrorAlertView.swift */; };
@@ -33,6 +34,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B5094ED825BF64D3000483A7 /* MovieCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieCollectionViewCell.swift; sourceTree = "<group>"; };
 		B50DE88225BA07900047185B /* Endpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endpoint.swift; sourceTree = "<group>"; };
 		B519076825B7698A0003D971 /* DataWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataWrapper.swift; sourceTree = "<group>"; };
 		B519076925B7698A0003D971 /* ErrorAlertView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorAlertView.swift; sourceTree = "<group>"; };
@@ -71,6 +73,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B5094ED725BF64B8000483A7 /* CustomCells */ = {
+			isa = PBXGroup;
+			children = (
+				B5094ED825BF64D3000483A7 /* MovieCollectionViewCell.swift */,
+			);
+			path = CustomCells;
+			sourceTree = "<group>";
+		};
 		B50DE88125BA07690047185B /* Endpoint */ = {
 			isa = PBXGroup;
 			children = (
@@ -173,6 +183,7 @@
 		B570F02D25B608F60050E417 /* Movies */ = {
 			isa = PBXGroup;
 			children = (
+				B5094ED725BF64B8000483A7 /* CustomCells */,
 				B5E13AC225BF598900A5D625 /* TabBar */,
 				B5E13AB925BF586C00A5D625 /* MovieDetail */,
 				B532A8BB25BF543700C754E1 /* TopMovies */,
@@ -374,6 +385,7 @@
 				B5E13AC025BF58DC00A5D625 /* MovieDetailViewController.swift in Sources */,
 				B570F03125B608F60050E417 /* SceneDelegate.swift in Sources */,
 				B56F355E25BF5B7C00E9A589 /* MoviesTabBarViewController.swift in Sources */,
+				B5094ED925BF64D3000483A7 /* MovieCollectionViewCell.swift in Sources */,
 				B532A8BE25BF545300C754E1 /* TopMoviesCoordinator.swift in Sources */,
 				B5E13ABD25BF58BB00A5D625 /* MovieDetailCoordinator.swift in Sources */,
 			);

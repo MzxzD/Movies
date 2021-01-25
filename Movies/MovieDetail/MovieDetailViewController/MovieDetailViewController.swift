@@ -21,7 +21,7 @@ class MovieDetailViewController: UIViewController {
     imageView = imageViewd
     imageView.scalesLargeContentImage = true
     
-    FacadeAPI.shared.fetchEntityType(Movies.self, from: .movie(.popular)) { (wrappedData) in
+    FacadeAPI.shared.fetchEntityType(Movies.self, from: .movie(.topRated)) { (wrappedData) in
       let testInfos: [(path: String, label: String)] = wrappedData.data!.results!.compactMap({
         if let poster = $0.posterPath, let title = $0.title {
           return (path: poster, label: title )

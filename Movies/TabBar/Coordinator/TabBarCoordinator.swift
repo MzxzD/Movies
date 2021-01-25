@@ -34,7 +34,7 @@ class TabBarCoordinator: Coordinator {
     
     childCoordinators.append(movieDetailCoordinator)
     childCoordinators.append(topMoviesCoordinator)
-    controller.viewControllers = [movieDetailViewController, topMoviesViewController]
+    controller.viewControllers = [topMoviesViewController, movieDetailViewController]
     
   }
 }
