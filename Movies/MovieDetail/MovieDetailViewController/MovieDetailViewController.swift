@@ -1,13 +1,14 @@
 //
-//  ViewController.swift
+//  MovieDetailViewController.swift
 //  Movies
 //
-//  Created by Mateo Doslic on 18/01/2021.
+//  Created by Mateo Doslic on 25/01/2021.
 //
 
 import UIKit
 
-class ViewController: UIViewController { //, URLSessionDownloadDelegate, URLSessionDelegate {
+class MovieDetailViewController: UIViewController {
+  
   var imageView: UIImageView!
   var label: UILabel!
   
@@ -19,7 +20,7 @@ class ViewController: UIViewController { //, URLSessionDownloadDelegate, URLSess
     self.view.addSubview(imageViewd)
     imageView = imageViewd
     imageView.scalesLargeContentImage = true
-
+    
     FacadeAPI.shared.fetchEntityType(Movies.self, from: .movie(.popular)) { (wrappedData) in
       let testInfos: [(path: String, label: String)] = wrappedData.data!.results!.compactMap({
         if let poster = $0.posterPath, let title = $0.title {
@@ -30,7 +31,7 @@ class ViewController: UIViewController { //, URLSessionDownloadDelegate, URLSess
       })
       let firstInfo = testInfos.first!
       
-
+      
       FacadeAPI.shared.fetchImage(.image(.poster(path: firstInfo.path))) { [unowned self] (wrappedImage) in
         if let image = wrappedImage.data {
           self.imageView.image = image
@@ -40,7 +41,7 @@ class ViewController: UIViewController { //, URLSessionDownloadDelegate, URLSess
           FacadeAPI.shared.showAlertView(from: self, with: "Whoops", and: wrappedImage.error ?? "Something went Wrong")
         }
       }
-
+      
     }
   }
 }
