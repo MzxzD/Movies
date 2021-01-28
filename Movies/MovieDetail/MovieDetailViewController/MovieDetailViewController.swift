@@ -11,6 +11,7 @@ class MovieDetailViewController: UIViewController {
   
   var imageView: UIImageView!
   var label: UILabel!
+  var button: UIBarButtonItem!
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -20,7 +21,25 @@ class MovieDetailViewController: UIViewController {
     self.view.addSubview(imageViewd)
     imageView = imageViewd
     imageView.scalesLargeContentImage = true
+    
+    button = UIBarButtonItem(image: UIImage(systemName: "star"), style: .done, target: self, action: #selector(starButtonPressed))
+
+    self.navigationItem.rightBarButtonItem = button
+
   }
+  
+  
+  
+  @objc func starButtonPressed() {
+    button.image = UIImage(systemName: "star.fill")
+  }
+  
+  @objc func myRightSideBarButtonItemTapped(_ sender:UIBarButtonItem!)
+  {
+      print("myRightSideBarButtonItemTapped")
+  }
+
+  
 }
 
 // MARK: - For later

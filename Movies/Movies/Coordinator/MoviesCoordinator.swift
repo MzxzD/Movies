@@ -38,6 +38,7 @@ class MoviesCoordinator: Coordinator {
       }
     }()
     self.controller.title = title
+    self.controller.coordinator = self
 
   }
   func start() {
@@ -68,4 +69,11 @@ class MoviesCoordinator: Coordinator {
     ()
     }
   }
+  
+  func show(_ movie: NetworkMovie) {
+    let movieDetailCoordinator = MovieDetailCoordinator(presenter: presenter)
+//    let movieDetailViewController = movieDetailCoordinator.controller
+    movieDetailCoordinator.start()
+  }
+  
 }

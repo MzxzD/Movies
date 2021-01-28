@@ -12,6 +12,7 @@ private let reuseIdentifier = "Cell"
 class MoviesCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
   
   var movies: [NetworkMovie]!
+  var coordinator: MoviesCoordinator!
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -84,7 +85,9 @@ class MoviesCollectionViewController: UICollectionViewController, UICollectionVi
   }
 
   
-  
+  override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    coordinator.show(movies[indexPath.row])
+  }
 
     // MARK: UICollectionViewDelegate
 
