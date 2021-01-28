@@ -9,7 +9,7 @@ import UIKit
 
 private let reuseIdentifier = "Cell"
 
-class TopMoviesCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
+class MoviesCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
   
   var movies: [Movie]!
   
@@ -17,8 +17,21 @@ class TopMoviesCollectionViewController: UICollectionViewController, UICollectio
     super.viewDidLoad()
     self.clearsSelectionOnViewWillAppear = false
     self.collectionView!.register(MovieCollectionViewCell.self, forCellWithReuseIdentifier: MovieCollectionViewCell.reuseIdentifier)
+  
+//    let refreshControl = UIRefreshControl()
+//    refreshControl.tintColor = UIColor.blue
+//    refreshControl.addTarget(self, action: #selector(self.refresh), for: .valueChanged)
+//    collectionView.refreshControl = refreshControl
+//    collectionView.alwaysBounceVertical = true
+    
   }
   
+//  
+//  @objc func refresh() {
+//    collectionView.reloadData()
+//    collectionView.refreshControl?.endRefreshing()
+//    
+//  }
   /*
     // MARK: - Navigation
 

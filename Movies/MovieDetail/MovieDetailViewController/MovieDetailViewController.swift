@@ -21,27 +21,9 @@ class MovieDetailViewController: UIViewController {
     imageView = imageViewd
     imageView.scalesLargeContentImage = true
     
-    FacadeAPI.shared.fetchEntityType(Movies.self, from: .movie(.topRated)) { (wrappedData) in
-      let testInfos: [(path: String, label: String)] = wrappedData.data!.results!.compactMap({
-        if let poster = $0.posterPath, let title = $0.title {
-          return (path: poster, label: title )
-        } else {
-          return nil
-        }
-      })
-      let firstInfo = testInfos.first!
-      
-      
-      FacadeAPI.shared.fetchImage(.image(.poster(path: firstInfo.path))) { [unowned self] (wrappedImage) in
-        if let image = wrappedImage.data {
-          self.imageView.image = image
-          let color = image.averageColor
-          let inverse = color?.textColor()
-        } else {
-          FacadeAPI.shared.showAlertView(from: self, with: "Whoops", and: wrappedImage.error ?? "Something went Wrong")
-        }
-      }
-      
+    
+    FacadeAPI.shared.fetchEntityType(Genres.self, from: .genre(.list)) { (wrappedData) in
+      print(wrappedData)
     }
   }
 }

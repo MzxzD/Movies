@@ -16,6 +16,10 @@ enum Endpoint {
     case similar(id: Int)
   }
   
+  enum Genre {
+    case list
+  }
+  
   enum Image {
     case poster(path: String)// = "poster_path"
     case backDrop(path: String)// = "backdrop_path"
@@ -23,6 +27,7 @@ enum Endpoint {
   
   case movie(Movie)
   case image(Image)
+  case genre(Genre)
   
   func getUrl() -> URL? {
     var baseUrl = ""
@@ -49,6 +54,13 @@ enum Endpoint {
         endpointUrl = "/\(path)"
       case .backDrop(path: let path):
         endpointUrl = "/\(path)"
+      }
+    case .genre(let genre):
+      baseUrl = "https://api.themoviedb.org/3/"
+      
+      switch genre {
+      case .list:
+        endpointUrl = "genre/movie/list"
       }
     }
     
