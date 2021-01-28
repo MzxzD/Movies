@@ -10,12 +10,12 @@ import Foundation
 import Foundation
 
 // MARK: - Genres
-struct Genres: Codable {
-    let genres: [Genre]?
+struct NetworkGenres: Codable {
+    let genres: [NetworkGenre]?
 }
 
 // MARK: - Genre
-struct Genre: Codable {
+struct NetworkGenre: Codable {
     let id: Int?
     let name: String?
 }

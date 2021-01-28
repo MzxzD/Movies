@@ -26,15 +26,21 @@ class TabBarCoordinator: Coordinator {
     movieDetailViewController.tabBarItem = UITabBarItem(title: "Detail", image: nil, selectedImage: nil)
     
     let topMoviesNavigationController = UINavigationController()
-    let topMoviesCoordinator = TopMoviesCoordinator(presenter: topMoviesNavigationController)
-    let topMoviesViewController = topMoviesNavigationController
-    topMoviesViewController.tabBarItem = UITabBarItem(title: "Top Movies", image: nil, selectedImage: nil)
+    let topMoviesCoordinator = MoviesCoordinator(presenter: topMoviesNavigationController, moviesDataType: .topMovies)
+//    let topMoviesViewController = topMoviesNavigationController
+    topMoviesNavigationController.title = "Top Movies"
+    topMoviesNavigationController.tabBarItem = UITabBarItem(title: "Top Movies", image: nil, selectedImage: nil)
     topMoviesCoordinator.start()
     
+    let popularMoviesNavigationController = UINavigationController()
+    let popularMoviesCoordinator = MoviesCoordinator(presenter: popularMoviesNavigationController, moviesDataType: .popularMovies)
+    popularMoviesNavigationController.title = "Popular Movies"
+    popularMoviesNavigationController.tabBarItem = UITabBarItem(title: "Popular Movies", image: nil, selectedImage: nil)
+    popularMoviesCoordinator.start()
     
     childCoordinators.append(movieDetailCoordinator)
     childCoordinators.append(topMoviesCoordinator)
-    controller.viewControllers = [topMoviesViewController, movieDetailViewController]
+    controller.viewControllers = [topMoviesNavigationController, popularMoviesNavigationController, movieDetailViewController]
     
   }
 }

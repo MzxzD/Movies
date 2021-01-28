@@ -20,11 +20,6 @@ class MovieDetailViewController: UIViewController {
     self.view.addSubview(imageViewd)
     imageView = imageViewd
     imageView.scalesLargeContentImage = true
-    
-    
-    FacadeAPI.shared.fetchEntityType(Genres.self, from: .genre(.list)) { (wrappedData) in
-      print(wrappedData)
-    }
   }
 }
 

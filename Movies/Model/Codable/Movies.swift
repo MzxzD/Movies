@@ -8,9 +8,9 @@
 import Foundation
 
 // MARK: - Movies
-struct Movies: Codable {
+struct NetworkMovies: Codable {
     let page: Int?
-    let results: [Movie]?
+    let results: [NetworkMovie]?
     let totalPages, totalResults: Int?
 
     enum CodingKeys: String, CodingKey {
@@ -21,7 +21,7 @@ struct Movies: Codable {
 }
 
 // MARK: - Result
-struct Movie: Codable {
+struct NetworkMovie: Codable {
     let adult: Bool?
     let backdropPath: String?
     let genreIDS: [Int]?

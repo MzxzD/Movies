@@ -5,4 +5,19 @@
 //  Created by Mateo Doslic on 28/01/2021.
 //
 
-import Foundation
+import UIKit
+
+extension UIView {
+  
+  func starSpinnerLoading() {
+    let loadingIndicator = UIActivityIndicatorView(frame: self.frame)
+    loadingIndicator.style = UIActivityIndicatorView.Style.large
+    loadingIndicator.startAnimating();
+  }
+  
+  
+  func stopSpinner() {
+    let loadingIndicator = self.subviews.first(where: { $0.isKind(of: UIActivityIndicatorView.self) })
+    loadingIndicator?.removeFromSuperview()
+  }
+}

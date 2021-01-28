@@ -10,16 +10,20 @@ import CoreData
 import UIKit
 
 class FacadeAPI {
+  
   private var errorAlert: AlertController
   private var urlSession: RequestService
+  private var coreDataManager: CoreDataManager
   
   static let shared = FacadeAPI()
   
   private init() {
     errorAlert = AlertController()
     urlSession = RequestService()
+    coreDataManager = CoreDataManager()
   }
   
+  // MARK: - RequestService
   func fetchEntityType<T: Codable>(_ type: T.Type, from endpoint: Endpoint, completion: @escaping (DataWrapper<T>)->()) {
     urlSession.sendRequestOfType(.get, endpoint: endpoint) { (wrappedData) in
       var completionValue = DataWrapper<T>(data: nil, error: nil)
@@ -63,8 +67,30 @@ class FacadeAPI {
       }
     }
   }
+  // MARK: - AlertController
   
   func showAlertView(from view: UIViewController, with title: String, and message: String) {
     errorAlert.alert(viewToPresent: view, title: title, message: message)
   }
+  
+  // MARK: - CoreDataManager
+  func getObjectEntityOfType<T: NSManagedObject>(_ type: T.Type, with ids: [Int]? = nil) -> [T]? {
+    return coreDataManager.getObjectEntityOfType(type, with: ids)
+  }
+  
+  func castToPersistable(_ source: NetworkMovie) -> Movie {
+    return coreDataManager.castToPersistable(source)
+  }
+  
+  func castToPersistable(_ source: NetworkGenre) -> Genre {
+    return coreDataManager.castToPersistable(source)
+  }
+  
+  func populateGenreToPersistentStore() {
+    coreDataManager.populateGenreToPersistentStore()
+  }
+  
 }
+
+
+

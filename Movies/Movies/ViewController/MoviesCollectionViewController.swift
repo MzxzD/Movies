@@ -11,7 +11,7 @@ private let reuseIdentifier = "Cell"
 
 class MoviesCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
   
-  var movies: [Movie]!
+  var movies: [NetworkMovie]!
   
   override func viewDidLoad() {
     super.viewDidLoad()
