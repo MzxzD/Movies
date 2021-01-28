@@ -7,7 +7,7 @@
 
 import UIKit
 
-class TopMoviesCoordinator: Coordinator {
+class MoviesCoordinator: Coordinator {
   
   var childCoordinators: [Coordinator] = []
   var presenter: UINavigationController
