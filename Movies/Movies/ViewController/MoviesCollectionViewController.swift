@@ -11,113 +11,63 @@ private let reuseIdentifier = "Cell"
 
 class MoviesCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
   
-  var movies: [NetworkMovie]!
-  var coordinator: MoviesCoordinator!
+  var datasource: MovieDataSource!
+  var coordinator: MoviesCoordinator?
+  var containerView: UIView!
+  var needsToLoad: Bool = true
+  var label: UILabel?
   
   override func viewDidLoad() {
     super.viewDidLoad()
     self.clearsSelectionOnViewWillAppear = false
     self.collectionView!.register(MovieCollectionViewCell.self, forCellWithReuseIdentifier: MovieCollectionViewCell.reuseIdentifier)
-  
-//    let refreshControl = UIRefreshControl()
-//    refreshControl.tintColor = UIColor.blue
-//    refreshControl.addTarget(self, action: #selector(self.refresh), for: .valueChanged)
-//    collectionView.refreshControl = refreshControl
-//    collectionView.alwaysBounceVertical = true
     
-  }
-  
-//  
-//  @objc func refresh() {
-//    collectionView.reloadData()
-//    collectionView.refreshControl?.endRefreshing()
-//    
-//  }
-  /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
+    if needsToLoad {
+      self.view.starSpinnerLoading()
+    } else {
+      label = UILabel(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 50))
+      label!.textColor = .white
+      label!.font = .systemFont(ofSize: 30)
+      label!.textAlignment = .center
+      label!.text = "No Favorites yet..."
+      self.view.addSubview(label!)
+      label!.center = self.collectionView.center
     }
-    */
-
-    // MARK: UICollectionViewDataSource
-
-//    override func numberOfSections(in collectionView: UICollectionView) -> Int {
-//        // #warning Incomplete implementation, return the number of sections
-//        return 0
-//    }
-
-
-//    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-//        // #warning Incomplete implementation, return the number of items
-//        return 0
-//    }
-//
-//    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-//        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
-//
-//        // Configure the cell
-//
-//        return cell
-//    }
-  
-  // 3. Return number of items:
-  override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    return movies.count
   }
   
-  // 4. Define the reusable cell:
+  override func viewDidAppear(_ animated: Bool) {
+    datasource.prepareDataSource { [unowned self] in
+      if needsToLoad {
+        view.stopSpinner()
+      } else {
+        if datasource.count() > 0 {
+          label?.removeFromSuperview()
+        }
+      }
+      collectionView.reloadData()
+    }
+  }
+  
+  // MARK: - collectionView
+  
+  override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    return datasource.count()
+  }
+  
   override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MovieCollectionViewCell.reuseIdentifier, for: indexPath) as! MovieCollectionViewCell
-      // You can cast type above as such: ...for: indexPath) as! BespokeCell
-    cell.setupCell(movie: movies[indexPath.row])
-      return cell
+    
+    cell.setupCell(movie: datasource.movie(at: indexPath))
+    return cell
   }
   
-  // 5. Define the size of the cell. This depends on protocol 'UICollectionViewDelegateFlowLayout' to work:
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-    let width = view.frame.width / 2 - 10 // In this example the width is the same as the whole view.
-      let height = CGFloat(250)
-      return CGSize(width: width, height: height)
+    let width = view.frame.width / 2 - 10
+    let height = CGFloat(250)
+    return CGSize(width: width, height: height)
   }
-
   
   override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-    coordinator.show(movies[indexPath.row])
+    coordinator?.show(datasource.movie(at: indexPath))
   }
-
-    // MARK: UICollectionViewDelegate
-
-    /*
-    // Uncomment this method to specify if the specified item should be highlighted during tracking
-    override func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-    */
-
-    /*
-    // Uncomment this method to specify if the specified item should be selected
-    override func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-    */
-
-    /*
-    // Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item
-    override func collectionView(_ collectionView: UICollectionView, shouldShowMenuForItemAt indexPath: IndexPath) -> Bool {
-        return false
-    }
-
-    override func collectionView(_ collectionView: UICollectionView, canPerformAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) -> Bool {
-        return false
-    }
-
-    override func collectionView(_ collectionView: UICollectionView, performAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) {
-    
-    }
-    */
-
 }

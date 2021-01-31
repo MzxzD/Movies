@@ -7,19 +7,11 @@
 
 import UIKit
 
-enum MovesDataType {
-  case topMovies
-  case popularMovies
-  case favoriteMovies
-}
-
 class MoviesCoordinator: Coordinator {
-  
   var childCoordinators: [Coordinator] = []
   var presenter: UINavigationController
   let controller: MoviesCollectionViewController
   let moviesDataType: MovesDataType
-  
   
   init (presenter: UINavigationController, moviesDataType: MovesDataType ){
     self.presenter = presenter
@@ -35,45 +27,23 @@ class MoviesCoordinator: Coordinator {
         return "Popular Moves"
       case .favoriteMovies:
         return "Favorite Movies"
+      case .similar(let movie):
+        return "\(movie.title ?? "") Similar"
       }
     }()
     self.controller.title = title
     self.controller.coordinator = self
-
+    self.controller.datasource = MovieDataSource(movieDataType: moviesDataType)
+    self.controller.needsToLoad = moviesDataType == .favoriteMovies ? false : true
   }
+  
   func start() {
-    
-    switch moviesDataType {
-    case .topMovies, .popularMovies:
-      let endpoint: Endpoint = {
-        if moviesDataType == .topMovies {
-          return Endpoint.movie(.topRated)
-        } else {
-          return Endpoint.movie(.popular)
-        }
-      }()
-      FacadeAPI.shared.fetchEntityType(NetworkMovies.self, from: endpoint) { (wrappedData) in
-        if let movies = wrappedData.data {
-          let cleanedMovies = movies.results?.compactMap({ (movie) -> NetworkMovie? in
-            return (movie.title != nil && movie.posterPath != nil) ? movie : nil
-          })
-          if let filteredMovies = cleanedMovies {
-            self.controller.movies = filteredMovies
-          }
-        }
-        self.presenter.pushViewController(self.controller, animated: true)
-      }
-      
-    case .favoriteMovies:
-      // CoreDataImplementation
-    ()
-    }
+    self.presenter.pushViewController(self.controller, animated: true)
   }
   
   func show(_ movie: NetworkMovie) {
-    let movieDetailCoordinator = MovieDetailCoordinator(presenter: presenter)
-//    let movieDetailViewController = movieDetailCoordinator.controller
+    let movieDetailCoordinator = MovieDetailCoordinator(presenter: presenter, movie: movie)
+    childCoordinators.append(movieDetailCoordinator)
     movieDetailCoordinator.start()
   }
-  
 }

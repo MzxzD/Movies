@@ -74,6 +74,7 @@ class FacadeAPI {
   }
   
   // MARK: - CoreDataManager
+  
   func getObjectEntityOfType<T: NSManagedObject>(_ type: T.Type, with ids: [Int]? = nil) -> [T]? {
     return coreDataManager.getObjectEntityOfType(type, with: ids)
   }
@@ -88,6 +89,14 @@ class FacadeAPI {
   
   func populateGenreToPersistentStore() {
     coreDataManager.populateGenreToPersistentStore()
+  }
+  
+  func removeEntityOfType<T: NSManagedObject>(_ type: T.Type, with id: Int) {
+    coreDataManager.removeEntityOfType(type, with: id)
+  }
+  
+  func persistEntity(_ movie: NetworkMovie) {
+    coreDataManager.persistEntity(movie)
   }
   
 }

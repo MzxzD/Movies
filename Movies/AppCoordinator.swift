@@ -7,7 +7,7 @@
 
 import UIKit
 
-class AppCoordinator: Coordinator{  
+class AppCoordinator: Coordinator {
   
   var childCoordinators: [Coordinator] = []
   let window: UIWindow

@@ -107,6 +107,27 @@ class CoreDataManager {
       print(error)
     }
   }
+  
+  func removeEntityOfType<T: NSManagedObject>(_ type: T.Type, with id: Int) {
+    // Since it's not multiContext app, I can do this
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate
+    else {
+      fatalError("Could not get app delegate instance!")
+    }
+    let mainManagedContext = appDelegate.persistentContainer.viewContext
+    
+    let objects = self.getObjectEntityOfType(type, with: [id])
+    for object in objects! {
+      mainManagedContext.delete(object)
+    }
+    saveContext()
+  }
+  
+  func persistEntity(_ movie: NetworkMovie) {
+    _ = self.castToPersistable(movie)
+    saveContext()
+  }
+  
 }
 
 

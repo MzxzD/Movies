@@ -11,6 +11,7 @@ extension UIView {
   
   func starSpinnerLoading() {
     let loadingIndicator = UIActivityIndicatorView(frame: self.frame)
+    self.addSubview(loadingIndicator)
     loadingIndicator.style = UIActivityIndicatorView.Style.large
     loadingIndicator.startAnimating();
   }
