@@ -12,7 +12,7 @@ private let reuseIdentifier = "Cell"
 class MoviesCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
   
   var datasource: MovieDataSource!
-  var coordinator: MoviesCoordinator?
+  weak var coordinator: MoviesCoordinator?
   var containerView: UIView!
   var needsToLoad: Bool = true
   var label: UILabel?
@@ -46,6 +46,17 @@ class MoviesCollectionViewController: UICollectionViewController, UICollectionVi
       }
       collectionView.reloadData()
     }
+  }
+  
+  override func viewDidDisappear(_ animated: Bool) {
+    super.viewDidDisappear(animated)
+    if parent == nil {
+      coordinator?.viewControllerDiDFinish()
+    }
+  }
+  
+  deinit {
+    print("\(self) deinited")
   }
   
   // MARK: - collectionView

@@ -20,7 +20,7 @@ class MovieDetailViewController: UIViewController {
   var button: UIBarButtonItem!
   
   var movie: NetworkMovie!
-  var coordinator: MovieDetailCoordinator?
+  weak var coordinator: MovieDetailCoordinator?
   var isMovieFavorite: Bool = false
   
   override func viewDidLoad() {
@@ -43,7 +43,13 @@ class MovieDetailViewController: UIViewController {
   
   override func viewDidDisappear(_ animated: Bool) {
     super.viewDidDisappear(animated)
-    coordinator = nil
+    if parent == nil {
+      coordinator?.viewControllerDiDFinish()
+    }
+  }
+  
+  deinit {
+    print("\(self) deinited")
   }
   
   @objc func starButtonPressed() {

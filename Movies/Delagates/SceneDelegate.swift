@@ -10,15 +10,15 @@ import UIKit
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
   
   var window: UIWindow?
-  private var appCoordinator: AppCoordinator!
+  private var appCoordinator: MainCoordinator!
   
   func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
     guard let windowScene = (scene as? UIWindowScene) else {
       return
     }
     let window = UIWindow(windowScene: windowScene)
-    let coordinator = AppCoordinator(window: window)
-    coordinator.start()
+    appCoordinator = MainCoordinator(window: window)
+    appCoordinator.start()
     
     self.window = window
     

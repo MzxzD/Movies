@@ -21,8 +21,7 @@ class MovieDetailCoordinator: Coordinator {
   }
   
   deinit {
-    print(self)
-    print("deinit")
+    print("\(self) deinited")
   }
   
   func start() {
@@ -30,9 +29,15 @@ class MovieDetailCoordinator: Coordinator {
     controller.coordinator = self
   }
   
+  func viewControllerDiDFinish() {
+    childCoordinators.removeAll()
+    parentCoordinator?.removeChildCoordinator(childCoordinator: self)
+  }
+  
   func showMovies(using movie: NetworkMovie) {
     let moviesCoordinator = MoviesCoordinator(presenter: presenter, moviesDataType: .similar(movie))
-    childCoordinators.append(moviesCoordinator)
+    moviesCoordinator.parentCoordinator = self
+    addChildCoordinator(childCoordinator: moviesCoordinator)
     moviesCoordinator.start()
   }
 }

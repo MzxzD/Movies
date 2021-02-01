@@ -7,12 +7,17 @@
 
 import UIKit
 
-public protocol Coordinator: AnyObject {
+public protocol BaseCoordinator: AnyObject {
   var childCoordinators: [Coordinator] { get set }
   func start()
+
 }
 
-public extension Coordinator {
+public protocol Coordinator: BaseCoordinator {
+  var presenter: UINavigationController { get set }
+}
+
+public extension BaseCoordinator {
   
   /// Add a child coordinator to the parent
   func addChildCoordinator(childCoordinator: Coordinator) {

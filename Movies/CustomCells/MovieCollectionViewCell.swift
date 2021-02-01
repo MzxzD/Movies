@@ -27,13 +27,10 @@ class MovieCollectionViewCell: UICollectionViewCell {
   func setupCell(movie: NetworkMovie) {
     starSpinnerLoading()
     label.text = movie.title
-    FacadeAPI.shared.fetchImage(.image(.poster(path: movie.posterPath ?? ""))) { [unowned self] (wrappedImage) in
+    FacadeAPI.shared.fetchImage(.image(.poster(path: movie.posterPath ?? ""))) { [weak self] (wrappedImage) in
       if let image = wrappedImage.data {
-        stopSpinner()
-        imageView.image = image
-//        let color = image.averageColor
-//        let inverse = color?.textColor()
-//        label.textColor = inverse
+        self?.stopSpinner()
+        self?.imageView.image = image
       }
     }
   }

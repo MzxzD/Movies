@@ -9,6 +9,7 @@ import UIKit
 
 class MoviesCoordinator: Coordinator {
   var childCoordinators: [Coordinator] = []
+  var parentCoordinator: Coordinator?
   var presenter: UINavigationController
   let controller: MoviesCollectionViewController
   let moviesDataType: MovesDataType
@@ -37,13 +38,23 @@ class MoviesCoordinator: Coordinator {
     self.controller.needsToLoad = moviesDataType == .favoriteMovies ? false : true
   }
   
+  deinit {
+    print("\(self) deinited")
+  }
+  
   func start() {
     self.presenter.pushViewController(self.controller, animated: true)
   }
   
+  func viewControllerDiDFinish() {
+    childCoordinators.removeAll()
+    parentCoordinator?.removeChildCoordinator(childCoordinator: self)
+  }
+  
   func show(_ movie: NetworkMovie) {
     let movieDetailCoordinator = MovieDetailCoordinator(presenter: presenter, movie: movie)
-    childCoordinators.append(movieDetailCoordinator)
+    addChildCoordinator(childCoordinator: movieDetailCoordinator)
+    movieDetailCoordinator.parentCoordinator = self
     movieDetailCoordinator.start()
   }
 }
